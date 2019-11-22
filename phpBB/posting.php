@@ -421,7 +421,7 @@ if (!$is_authed || !empty($error))
 	login_box('', $message);
 }
 
-if ($config['enable_post_confirm'] && !$user->data['is_registered'])
+if (($config['enable_post_confirm'] && !$user->data['is_registered']) || !$auth->acl_get('u_no_captcha_post'))
 {
 	$captcha = $phpbb_container->get('captcha.factory')->get_instance($config['captcha_plugin']);
 	$captcha->init(CONFIRM_POST);
