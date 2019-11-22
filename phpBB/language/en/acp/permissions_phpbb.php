@@ -102,6 +102,7 @@ $lang = array_merge($lang, array(
 	'ACL_U_HIDEONLINE'	=> 'Can hide online status',
 	'ACL_U_VIEWONLINE'	=> 'Can view hidden online users',
 	'ACL_U_SEARCH'		=> 'Can search board',
+	'ACL_U_NO_CAPTCHA_POST' => 'Can post without a captcha',
 ));
 
 // Forum Permissions
