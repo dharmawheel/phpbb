@@ -421,7 +421,9 @@ if (!$is_authed || !empty($error))
 	login_box('', $message);
 }
 
-if (($config['enable_post_confirm'] && !$user->data['is_registered']) || !$auth->acl_get('u_no_captcha_post'))
+$should_show_captcha = ($config['enable_post_confirm'] && !$user->data['is_registered']) || !$auth->acl_get('u_no_captcha_post');
+
+if ($should_show_captcha)
 {
 	$captcha = $phpbb_container->get('captcha.factory')->get_instance($config['captcha_plugin']);
 	$captcha->init(CONFIRM_POST);
@@ -1142,7 +1144,7 @@ if ($submit || $preview || $refresh)
 		}
 	}
 
-	if ($config['enable_post_confirm'] && !$user->data['is_registered'] && in_array($mode, array('quote', 'post', 'reply')))
+	if ($should_show_captcha && in_array($mode, array('quote', 'post', 'reply')))
 	{
 		$captcha_data = array(
 			'message'	=> $request->variable('message', '', true),
@@ -1526,7 +1528,7 @@ if ($submit || $preview || $refresh)
 			);
 			extract($phpbb_dispatcher->trigger_event('core.posting_modify_submit_post_after', compact($vars)));
 
-			if ($config['enable_post_confirm'] && !$user->data['is_registered'] && (isset($captcha) && $captcha->is_solved() === true) && ($mode == 'post' || $mode == 'reply' || $mode == 'quote'))
+			if ($should_show_captcha && (isset($captcha) && $captcha->is_solved() === true) && ($mode == 'post' || $mode == 'reply' || $mode == 'quote'))
 			{
 				$captcha->reset();
 			}
@@ -1807,7 +1809,7 @@ generate_forum_nav($post_data);
 generate_forum_rules($post_data);
 
 // Posting uses is_solved for legacy reasons. Plugins have to use is_solved to force themselves to be displayed.
-if ($config['enable_post_confirm'] && !$user->data['is_registered'] && (isset($captcha) && $captcha->is_solved() === false) && ($mode == 'post' || $mode == 'reply' || $mode == 'quote'))
+if ($should_show_captcha && (isset($captcha) && $captcha->is_solved() === false) && ($mode == 'post' || $mode == 'reply' || $mode == 'quote'))
 {
 
 	$template->assign_vars(array(
