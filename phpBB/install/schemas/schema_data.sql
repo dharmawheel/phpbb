@@ -458,6 +458,7 @@ INSERT INTO phpbb_acl_options (auth_option, is_global) VALUES ('u_sendpm', 1);
 INSERT INTO phpbb_acl_options (auth_option, is_global) VALUES ('u_sig', 1);
 INSERT INTO phpbb_acl_options (auth_option, is_global) VALUES ('u_viewonline', 1);
 INSERT INTO phpbb_acl_options (auth_option, is_global) VALUES ('u_viewprofile', 1);
+INSERT INTO phpbb_acl_options (auth_option, is_global) VALUES ('u_no_captcha_post', 1);
 
 
 # -- standard auth roles
